@@ -1,4 +1,4 @@
-package com.example.amongsms;
+package com.example.a2psms;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

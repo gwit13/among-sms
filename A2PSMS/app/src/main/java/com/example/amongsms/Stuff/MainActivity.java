@@ -1,4 +1,4 @@
-package com.example.amongsms;
+package com.example.a2psms;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
