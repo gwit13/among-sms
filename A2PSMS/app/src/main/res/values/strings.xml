@@ -4,4 +4,5 @@
     <string name="permissions_title">Hey There, Crewmate!</string>
     <string name="permissions_text">AMONG SMS requires you give us permission to read and write SMS messages. We are 100% aware that this could be a concern for some. Our source code is uploaded in its entirety to GitHub, which shows that our app will not access, use, or even see messages other than from the phone number you give us. On top of that, AMONG SMS cannot see chat history or chat into the future once the app is closed. If you receive a non-location syntax text during time time the app is open and reading, AMONG SMS will disregard it and it will continue directly into your chat history with that person.</string>
     <string name="permission_button">I understand, and will be prompted again.</string>
+    <string name="dialog_header">Insert contact\'s phone number</string>
 </resources>
