@@ -20,18 +20,12 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
     DialogListener listener;
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        // Verify that the host activity implements the callback interface
-        try {
-            // Instantiate the NoticeDialogListener
-            listener = (DialogListener) context;
-        } catch (ClassCastException e) {
-            // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException("Class must implement NoticeDialogListener");
-        }
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        // Verify that the host activity implements the callback interface
+//        listener = (DialogListener) context;
+//    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

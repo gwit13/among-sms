@@ -23,11 +23,11 @@ public class SMSReceiver extends BroadcastReceiver{
             for(int i=0;i<message.length;i++){
                 message[i]=SmsMessage.createFromPdu((byte[]) pdus[i],format);
                 Matcher matcher=regex.matcher(message[i].getMessageBody());
-                if(matcher.matches()){
+                SharedPreferences sharedPref=context.getSharedPreferences("SharedPrefs",Context.MODE_PRIVATE);
+                if(matcher.matches()&&sharedPref.getString("phone","").equals(message[i].getOriginatingAddress())){
                     Log.e("SMS In","Matched!");
                     int start=message[i].getMessageBody().indexOf(':')+1;
                     int comma=message[i].getMessageBody().indexOf(',');
-                    SharedPreferences sharedPref=context.getSharedPreferences("SharedPrefs",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor=sharedPref.edit();
                     editor.putString("lat",sharedPref.getString("lat","")+message[i].getMessageBody().substring(start,comma)+',');
                     editor.putString("lon",sharedPref.getString("lon","")+message[i].getMessageBody().substring(comma+1)+',');

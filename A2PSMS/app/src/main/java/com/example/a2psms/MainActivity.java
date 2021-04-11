@@ -1,5 +1,6 @@
 package com.example.a2psms;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import android.Manifest;
@@ -8,14 +9,15 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class MainActivity extends AppCompatActivity implements android.location.LocationListener, DialogFragment.DialogListener{
+public class MainActivity extends AppCompatActivity implements android.location.LocationListener{
     SharedPreferences sharedPref;
-    ImageButton send;
+    ImageButton send,setPhone;
     double lat,lon;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -23,7 +25,9 @@ public class MainActivity extends AppCompatActivity implements android.location.
         setContentView(R.layout.activity_main);
         sharedPref=this.getSharedPreferences("SharedPrefs",Context.MODE_PRIVATE);
         send=findViewById(R.id.send);
+        setPhone=findViewById(R.id.setPhone);
         send.setOnClickListener(new SendListener());
+        setPhone.setOnClickListener(new PhoneListener());
         checkForSMSPermission();
     }
     @Override
@@ -44,22 +48,17 @@ public class MainActivity extends AppCompatActivity implements android.location.
         }
     }
 
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-//        SharedPreferences.Editor editor=sharedPref.edit();
-//        editor.putString("phone",phone);
-//        editor.apply();
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
-
-    }
-
     private class SendListener implements View.OnClickListener{
         @Override
         public void onClick(View v){
             SmsManager.getDefault().sendTextMessage(sharedPref.getString("phone","5719992849"),null,"AMONG SMS:"+lat+','+lon,null,null);
+        }
+    }
+    private class PhoneListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            DialogFragment dialog=new DialogFragment();
+            dialog.show(getSupportFragmentManager(),"missiles");
         }
     }
 }
