@@ -13,7 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class MainActivity extends AppCompatActivity implements android.location.LocationListener{
+public class MainActivity extends AppCompatActivity implements android.location.LocationListener, DialogFragment.DialogListener{
     SharedPreferences sharedPref;
     ImageButton send;
     double lat,lon;
@@ -43,6 +43,19 @@ public class MainActivity extends AppCompatActivity implements android.location.
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
     }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+//        SharedPreferences.Editor editor=sharedPref.edit();
+//        editor.putString("phone",phone);
+//        editor.apply();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
+    }
+
     private class SendListener implements View.OnClickListener{
         @Override
         public void onClick(View v){

@@ -3,8 +3,11 @@ package com.example.a2psms;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -36,14 +39,22 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
+
         // Inflate and set the layout for the dialog
+        View v = inflater.inflate(R.layout.input_dialog, null);
+
+        EditText phone = v.findViewById(R.id.phone);
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.input_dialog, null))
+        builder.setView(v)
                 // Add action buttons
                 .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        listener.onDialogPositiveClick(DialogFragment.this);
+                        SharedPreferences sharedPref=getContext().getSharedPreferences("SharedPrefs",Context.MODE_PRIVATE);
+
+                        SharedPreferences.Editor editor=sharedPref.edit();
+                        editor.putString("phone",phone.getText().toString());
+                        editor.apply();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
