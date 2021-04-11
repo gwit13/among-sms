@@ -9,8 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 
 public class MainActivity extends AppCompatActivity{
     ViewPager2 mViewPager2;
@@ -26,10 +30,10 @@ public class MainActivity extends AppCompatActivity{
         checkForSMSPermission();
     }
     private void checkForSMSPermission(){
-        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.READ_SMS)!=PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_SMS},1);
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.RECEIVE_SMS)!=PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.RECEIVE_SMS},1);
+//            new PhoneDialog().show();
         }
-        else{}
     }
     private class MyFragmentStateAdapter extends FragmentStateAdapter{
         public MyFragmentStateAdapter(@NonNull FragmentActivity fragmentActivity){
@@ -37,8 +41,13 @@ public class MainActivity extends AppCompatActivity{
         }
         @NonNull
         @Override
-        public Fragment createFragment(int position) {
-            return SendFragment.newInstance(mViewPager2, position);
+        public Fragment createFragment(int position){
+            if(position==0){
+                return SendFragment.newInstance(mViewPager2,position);
+            }
+            else{
+                return ReceiveFragment.newInstance(mViewPager2,position);
+            }
         }
         @Override
         public int getItemCount(){
