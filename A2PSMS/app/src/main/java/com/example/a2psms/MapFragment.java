@@ -1,5 +1,7 @@
 package com.example.a2psms;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +18,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback{
     ViewPager2 mViewPager2;
     int count;
-
+    SharedPreferences sharedPref;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,7 +32,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager() //ChildFragmentManager bc this object extends Fragment itself
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this); //gaming
-
+        sharedPref=getContext().getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
         return v; //lpendleton
     }
 
@@ -44,8 +47,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     //Markers!
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(0, 0))
-                .title("Marker"));
+        String lat=sharedPref.getString("lat","");
+        String lon=sharedPref.getString("lon","");
+        if(!lat.equals("")){
+            String[] latArray=lat.split(",");
+            String[] lonArray=lon.split(",");
+            PolylineOptions polyline=new PolylineOptions();
+            polyline.color(0xFFFF0000);
+            for(int i=0;i<latArray.length;i++){
+                LatLng location=new LatLng(Float.parseFloat(latArray[i]),Float.parseFloat(lonArray[i]));
+                googleMap.addMarker(new MarkerOptions().position(location).title("Marker"));
+                polyline.add(location);
+            }
+            googleMap.addPolyline(polyline);
+        }
     }
 }
