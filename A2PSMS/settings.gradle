@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "A2P SMS"
+rootProject.name = "a2psms"

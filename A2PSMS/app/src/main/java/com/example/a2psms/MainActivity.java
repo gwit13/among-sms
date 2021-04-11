@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public Fragment createFragment(int position){
             if(position==0){
-                return SendFragment.newInstance(mViewPager2,position);
+                return MapFragment.newInstance(mViewPager2,position);
             }
             else{
                 return ReceiveFragment.newInstance(mViewPager2,position);
